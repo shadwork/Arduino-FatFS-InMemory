@@ -69,7 +69,9 @@ void* create_fat12_image(const char* volume_label, int total_sectors) {
 
     // Add volume label as the first entry
     memset(root_dir, 0, sizeof(DirectoryEntry));
-    strncpy(root_dir->name, volume_label, 11);
+    memset(root_dir->name, ' ', 11);
+    memcpy(root_dir->name, volume_label, strlen(volume_label));    
+    //strncpy(root_dir->name, volume_label, 11);
     root_dir->attributes = 0x08; // Volume label
     root_dir->writeTime = FAT12_HMS2B(12, 0, 0);
     root_dir->writeDate = FAT12_YMD2B(2024, 1, 1);
